@@ -76,10 +76,10 @@ export function buildMenuHtml(pages: MenuPage[]) {
   footer { padding:16px 12px 40px; text-align:center; font-size:12px; color:color-mix(in srgb,var(--brown) 70%,transparent); }
   #to-top { display:none; position:fixed; right:16px; bottom:16px; z-index:40; padding:12px; color:#fff; background:var(--green); box-shadow:0 10px 15px -3px rgb(0 0 0/.15); }
   #to-top.show { display:grid; animation:fade-in .3s ease-out; }
-  #sidebar-shell { display:none; position:fixed; inset:0; z-index:50; }
-  #sidebar-shell.open { display:block; }
+  #menu-panel-shell { display:none; position:fixed; inset:0; z-index:50; }
+  #menu-panel-shell.open { display:block; }
   #scrim { position:absolute; inset:0; border:0; background:rgb(0 0 0/.4); animation:fade .2s ease; }
-  #sidebar { position:absolute; left:0; top:0; width:82%; max-width:320px; height:100%; display:flex; flex-direction:column; background:var(--paper); box-shadow:0 20px 25px -5px rgb(0 0 0/.18); animation:slide-in .2s ease-out; }
+  #menu-panel { position:absolute; left:0; top:0; width:82%; max-width:320px; height:100%; display:flex; flex-direction:column; background:var(--paper); box-shadow:0 20px 25px -5px rgb(0 0 0/.18); animation:slide-in .2s ease-out; }
   .side-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid rgb(90 53 33/.15); }
   .side-head strong { display:block; font-size:16px; }
   .side-head small { display:block; margin-top:2px; font-size:12px; color:rgb(90 53 33/.7); }
@@ -131,9 +131,9 @@ export function buildMenuHtml(pages: MenuPage[]) {
   <footer>Umaeh Inyong · Jl. Gatot Subroto, Hetero Space, Purwokerto · 0851 0075 9000</footer>
 </main>
 <button id="to-top" class="round" type="button" aria-label="Kembali ke atas">${ICONS.up}</button>
-<div id="sidebar-shell" aria-hidden="true">
+<div id="menu-panel-shell" aria-hidden="true">
   <button id="scrim" type="button" aria-label="Tutup menu"></button>
-  <aside id="sidebar" aria-label="Daftar halaman menu">
+  <aside id="menu-panel" aria-label="Daftar halaman menu">
     <div class="side-head"><div><strong>Kantin Inyong</strong><small>Daftar halaman menu</small></div><button id="menu-close" type="button" aria-label="Tutup menu">${ICONS.close}</button></div>
     <div class="side-tools"><button id="only-favs" type="button">Favorit saja (<span id="fav-count">0</span>)</button><button id="save-html" type="button">${ICONS.download} HTML</button></div>
     <nav id="side-nav">${navItems}<p id="empty-favs">Belum ada halaman favorit.</p></nav>
@@ -147,7 +147,7 @@ export function buildMenuHtml(pages: MenuPage[]) {
 <script>
 (function(){
   var PAGES=${data}, KEY='inyong-fav-v1', TTL=3600000, cur=0, onlyFavs=false;
-  var shell=document.getElementById('sidebar-shell'), lb=document.getElementById('lb'), lbimg=document.getElementById('lbimg'), lbwrap=document.getElementById('lbwrap'), lbstage=document.getElementById('lbstage'), lbcount=document.getElementById('lbcount'), lbfav=document.getElementById('lbfav'), toTop=document.getElementById('to-top');
+  var shell=document.getElementById('menu-panel-shell'), lb=document.getElementById('lb'), lbimg=document.getElementById('lbimg'), lbwrap=document.getElementById('lbwrap'), lbstage=document.getElementById('lbstage'), lbcount=document.getElementById('lbcount'), lbfav=document.getElementById('lbfav'), toTop=document.getElementById('to-top');
   function readFav(){try{var raw=JSON.parse(localStorage.getItem(KEY)||'{}')||{}, fresh={}, now=Date.now();for(var k in raw)if(now-raw[k]<TTL)fresh[k]=raw[k];return fresh}catch(e){return {}}}
   function writeFav(value){try{localStorage.setItem(KEY,JSON.stringify(value))}catch(e){}}
   var fav=readFav();
