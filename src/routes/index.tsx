@@ -110,6 +110,11 @@ function MenuApp() {
         ))}
         <footer className="pb-10 pt-4 text-center text-xs text-[#5a3521]/70">
           Umaeh Inyong · Jl. Gatot Subroto, Hetero Space, Purwokerto · 0851 0075 9000
+          <span className="mt-2 block">
+            <Link to="/admin" className="text-[#5a3521]/45 underline">
+              Kelola
+            </Link>
+          </span>
         </footer>
       </main>
 
