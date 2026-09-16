@@ -104,13 +104,6 @@ export type Database = {
     }
     Functions: {
       bump_site_version: { Args: never; Returns: number }
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
       reorder_menu_pages: { Args: { _ids: string[] }; Returns: undefined }
     }
     Enums: {
