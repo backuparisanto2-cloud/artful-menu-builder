@@ -106,6 +106,12 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{document.documentElement.classList.add(sessionStorage.getItem("kantin-inyong-splash-seen")?"restaurant-splash-seen":"restaurant-splash-new")}catch(e){document.documentElement.classList.add("restaurant-splash-new")}',
+          }}
+        />
       </head>
       <body>
         {children}

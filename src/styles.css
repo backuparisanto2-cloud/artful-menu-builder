@@ -236,6 +236,10 @@
   opacity: 0;
 }
 
+.restaurant-splash-seen .restaurant-splash {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .restaurant-splash,
   .restaurant-splash-mark,
