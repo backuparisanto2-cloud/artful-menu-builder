@@ -68,7 +68,9 @@ function AuthPage() {
         onSubmit={onSubmit}
         className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-lg"
       >
-        <h1 className="text-lg font-bold text-[#5a3521]">Masuk Pengelola</h1>
+        <h1 className="text-lg font-bold text-[#5a3521]">
+          {mode === "signin" ? "Masuk Pengelola" : "Daftar Pengelola"}
+        </h1>
         <p className="mt-1 text-xs text-[#5a3521]/70">Kelola halaman menu Kantin Inyong.</p>
 
         <label className="mt-5 block text-xs font-semibold text-[#5a3521]">Email</label>
@@ -85,20 +87,34 @@ function AuthPage() {
         <input
           type="password"
           required
-          autoComplete="current-password"
+          minLength={6}
+          autoComplete={mode === "signin" ? "current-password" : "new-password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="mt-1 w-full rounded-lg border border-[#5a3521]/20 px-3 py-2 text-sm"
         />
 
         {error && <p className="mt-3 text-xs text-red-600">{error}</p>}
+        {notice && <p className="mt-3 text-xs text-[#2f6b3a]">{notice}</p>}
 
         <button
           type="submit"
           disabled={busy}
           className="mt-5 w-full rounded-full bg-[#5a3521] py-2.5 text-sm font-semibold text-[#faf5ea] disabled:opacity-60"
         >
-          {busy ? "Memproses…" : "Masuk"}
+          {busy ? "Memproses…" : mode === "signin" ? "Masuk" : "Daftar"}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setMode(mode === "signin" ? "signup" : "signin");
+            setError(null);
+            setNotice(null);
+          }}
+          className="mt-3 w-full text-center text-xs font-semibold text-[#5a3521]/70 underline"
+        >
+          {mode === "signin" ? "Belum punya akun? Daftar" : "Sudah punya akun? Masuk"}
         </button>
       </form>
     </div>
