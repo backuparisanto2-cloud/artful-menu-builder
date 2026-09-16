@@ -20,6 +20,9 @@
 
 @theme inline {
   --animate-wa-bounce: wa-bounce 1.8s ease-in-out infinite;
+  --color-restaurant-paper: var(--restaurant-paper);
+  --color-restaurant-ink: var(--restaurant-ink);
+  --color-restaurant-leaf: var(--restaurant-leaf);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -64,6 +67,9 @@
 
 :root {
   --radius: 0.625rem;
+  --restaurant-paper: oklch(0.974 0.021 86.4);
+  --restaurant-ink: oklch(0.34 0.067 52.8);
+  --restaurant-leaf: oklch(0.63 0.13 121.5);
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -147,4 +153,98 @@
 @keyframes wa-bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-2px); }
+}
+
+@keyframes restaurant-splash-mark-in {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes restaurant-splash-rule-in {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.restaurant-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--restaurant-paper);
+  color: var(--restaurant-ink);
+  opacity: 1;
+  transition: opacity 320ms cubic-bezier(0.4, 0, 0.2, 1), visibility 320ms;
+}
+
+.restaurant-splash::after {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid color-mix(in oklab, var(--restaurant-ink) 14%, transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.restaurant-splash-mark {
+  width: min(78vw, 330px);
+  text-align: center;
+  animation: restaurant-splash-mark-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.restaurant-splash-kicker {
+  margin: 18px 0 7px;
+  color: color-mix(in oklab, var(--restaurant-ink) 67%, transparent);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.restaurant-splash-title {
+  margin: 0 0 20px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 9vw, 3rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.restaurant-splash-rule {
+  display: block;
+  width: 42px;
+  height: 2px;
+  margin: 0 auto;
+  background: var(--restaurant-leaf);
+  transform-origin: center;
+  animation: restaurant-splash-rule-in 360ms 100ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.restaurant-splash-rule-end {
+  width: 78px;
+  animation-delay: 180ms;
+}
+
+.restaurant-splash-leaving {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.restaurant-splash-seen .restaurant-splash {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .restaurant-splash,
+  .restaurant-splash-mark,
+  .restaurant-splash-rule {
+    animation: none;
+    transition-duration: 80ms;
+  }
 }

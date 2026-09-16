@@ -9,6 +9,7 @@ import { getMenuPages } from "@/lib/menu.functions";
 import { downloadMenuHtml } from "@/lib/export-menu-html";
 import { useFavorites } from "@/hooks/use-favorites";
 import { MenuLightbox } from "@/components/menu-lightbox";
+import { RestaurantSplash } from "@/components/restaurant-splash";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { shareMenuImage } from "@/lib/share-menu";
 import { preloadNow, preloadSequential } from "@/lib/preload-images";
@@ -37,6 +38,8 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Sate kambing muda, gule, tongseng, dan menu legenda khas Banyumas.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: MenuApp,
@@ -86,6 +89,7 @@ function MenuApp() {
 
   return (
     <div className="min-h-screen bg-[#faf5ea]">
+      <RestaurantSplash />
       <button
         type="button"
         onClick={() => setSidebarOpen(true)}
