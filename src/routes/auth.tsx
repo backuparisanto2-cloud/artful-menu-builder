@@ -20,15 +20,39 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
     setError(null);
+    setNotice(null);
+
+    if (mode === "signup") {
+      const { data, error: err } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: window.location.origin + "/auth" },
+      });
+      setBusy(false);
+      if (err) {
+        setError(err.message);
+        return;
+      }
+      if (!data.session) {
+        setNotice("Akun dibuat. Cek email Anda untuk konfirmasi, lalu masuk.");
+        setMode("signin");
+        return;
+      }
+      void navigate({ to: "/admin" });
+      return;
+    }
+
     const { error: err } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (err) {
